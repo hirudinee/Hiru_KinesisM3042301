@@ -1,6 +1,19 @@
 let AWS = require('aws-sdk');
-exports.handler = function(event, context, callback) {
+const kinesis = new AWS.Kinesis();
+exports.handler = function (event, context, callback) {
 
 
-	callback(null,'Successfully executed');
+	kinesis.putRecord({
+		Data: 'test',
+		PartitionKey: 'test',
+		StreamName: 'kinesis-sample-stream'
+	}).promise()
+		.then(putRecordData => {
+			// your logic goes here
+		})
+		.catch(err => {
+			// error handling goes here
+		});
+
+	callback(null, 'Successfully executed');
 }
